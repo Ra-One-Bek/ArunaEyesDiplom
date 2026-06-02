@@ -174,7 +174,7 @@ export function Esp32Provider({ children }: { children: React.ReactNode }) {
 
         if (!announcedOnlineRef.current) {
           announcedOnlineRef.current = true;
-          speakRu(`${deviceName} подключена`);
+          speakRu(`Привет, я Eyes. ${deviceName} подключены. Чем могу помочь?`);
         }
 
         if (
