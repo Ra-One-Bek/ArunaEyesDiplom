@@ -148,7 +148,7 @@ export default function NavigatePage() {
       nav.setView("steps");
       setMobileMode("steps");
       setVoiceHint("Скажите: Маршрут Сарайшык 5Е до Мега Силквей");
-      speakRu("Назовите маршрут. Например: маршрут Сарайшык 5Е до Мега Силквей.");
+      speakRu("Назовите маршрут.");
       window.setTimeout(() => startVoiceRouteListening(), 700);
     }
   }, [location.search]);

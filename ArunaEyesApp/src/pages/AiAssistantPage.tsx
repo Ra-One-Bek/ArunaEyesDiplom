@@ -8,6 +8,7 @@ import {
 import { reverseGeocode } from "../features/navigation/navigationApi";
 import Header from "./Header";
 
+
 const API_BASE =
   import.meta.env.VITE_BACKEND_URL?.replace(/\/$/, "") ??
   "http://localhost:4000/api";
@@ -16,6 +17,8 @@ type Command =
   | { type: "build_route" }
   | { type: "repeat" }
   | { type: "where_am_i" }
+  | { type: "time" }
+  | { type: "play_music" }
   | { type: "unknown"; raw: string };
 
 function normalize(text: string) {
@@ -24,9 +27,37 @@ function normalize(text: string) {
 
 function parseCommand(text: string): Command {
   const t = normalize(text);
-  if (t.includes("постро") && t.includes("маршрут")) return { type: "build_route" };
-  if (t.includes("повтор")) return { type: "repeat" };
-  if (t.includes("где я")) return { type: "where_am_i" };
+
+  if (
+    t.includes("сколько сейчас времени") ||
+    t.includes("который час") ||
+    t === "время" ||
+    t.includes("скажи время")
+  ) {
+    return { type: "time" };
+  }
+
+  if (
+    t.includes("включи музыку") ||
+    t.includes("запусти музыку") ||
+    t.includes("поставь музыку") ||
+    t.includes("включи песню")
+  ) {
+    return { type: "play_music" };
+  }
+
+  if (t.includes("постро") && t.includes("маршрут")) {
+    return { type: "build_route" };
+  }
+
+  if (t.includes("повтор")) {
+    return { type: "repeat" };
+  }
+
+  if (t.includes("где я")) {
+    return { type: "where_am_i" };
+  }
+
   return { type: "unknown", raw: text };
 }
 
@@ -188,6 +219,30 @@ export default function AiAssistantPage() {
   async function handleFinalTranscript(transcript: string) {
     setHint(null);
     const cmd = parseCommand(transcript);
+    if (cmd.type === "time") {
+      const now = new Date();
+
+      const time = now.toLocaleTimeString("ru-RU", {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+
+      const msg = `Сейчас ${time}.`;
+      setAssistantText(msg);
+      speakRu(msg);
+      return;
+    }
+
+    if (cmd.type === "play_music") {
+      const msg = "Включаю музыку.";
+      setAssistantText(msg);
+      speakRu(msg);
+
+      window.localStorage.setItem("eyesapp:musicAutoplay", String(Date.now()));
+      navigate("/music?autoplay=1");
+
+      return;
+    }
 
     if (cmd.type === "repeat") {
       if (!assistantText.trim()) {

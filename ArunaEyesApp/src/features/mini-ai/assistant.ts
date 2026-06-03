@@ -41,7 +41,7 @@ export function answerAppQuestion(text: string) {
   }
 
   if (t.includes("как") && t.includes("маршрут")) {
-    return "Скажите: маршрут точка А до точка Б. Например: маршрут Сарайшык 5Е до Мега Силквей.";
+    return "Скажите: маршрут точка А до точка Б.";
   }
 
   if ((t.includes("как") && t.includes("где я")) || t.includes("местополож")) {
@@ -53,7 +53,7 @@ export function answerAppQuestion(text: string) {
   }
 
   if (t.includes("текст") && (t.includes("прочит") || t.includes("перескаж") || t.includes("резюм"))) {
-    return "Мини-ИИ может кратко пересказывать распознанный текст, когда вы добавите сценарий чтения текста в приложение.";
+    return "Eyes может кратко пересказывать распознанный текст, когда вы добавите сценарий чтения текста в приложение.";
   }
 
   return null;

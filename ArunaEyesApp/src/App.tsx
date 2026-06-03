@@ -9,6 +9,9 @@ import NavigatePage from "./pages/NavigatePage";
 import AiAssistantPage from "./pages/AiAssistantPage";
 import StatusGlasses from "./pages/StatusGlasses";
 import ConnectToGlasses from "./pages/ConnectToGlasses";
+import MusicPage from "./pages/MusicPage";
+import { VoiceWakeProvider }
+from "./features/mini-ai/VoiceWakeProvider";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -26,13 +29,16 @@ function App() {
       {loading ? (
         <SplashScreen />
       ) : (
-        <Routes>
-          <Route path="/" element={<HeroSection />} />
-          <Route path="/nav" element={<NavigatePage />} />
-          <Route path="/assistant" element={<AiAssistantPage />} />
-          <Route path="/status" element={<StatusGlasses />} />
-          <Route path="/connect-glasses" element={<ConnectToGlasses />} />
-        </Routes>
+        <VoiceWakeProvider>
+          <Routes>
+            <Route path="/" element={<HeroSection />} />
+            <Route path="/nav" element={<NavigatePage />} />
+            <Route path="/assistant" element={<AiAssistantPage />} />
+            <Route path="/status" element={<StatusGlasses />} />
+            <Route path="/connect-glasses" element={<ConnectToGlasses />} />
+            <Route path="/music" element={<MusicPage />} />
+          </Routes>
+        </VoiceWakeProvider>
       )}
     </Esp32Provider>
   );

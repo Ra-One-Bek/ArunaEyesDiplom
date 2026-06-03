@@ -12,6 +12,7 @@ export default function HeroPage() {
     () => [
       { title: "Navigate", icon: "➜", path: "/nav" },
       { title: "AI Assistant", icon: "✦", path: "/assistant" },
+      { title: "Music", icon: "♪", path: "/music" },
       { title: "Status Glasses", icon: "●", path: "/status" },
       { title: "Connect", icon: "⌁", path: "/connect-glasses" },
     ],
